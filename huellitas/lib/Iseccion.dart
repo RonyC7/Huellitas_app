@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'Pdatos.dart';
 
 class ISeccionScreen extends StatefulWidget {
@@ -7,138 +10,155 @@ class ISeccionScreen extends StatefulWidget {
 }
 
 class _ISeccionScreenState extends State<ISeccionScreen> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isChecked = false;
+
+  Future<void> _login() async {
+    final url = Uri.parse('http://localhost:8000/api/login/');
+
+    try {
+      final response = await http.post(url, body: {
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      });
+
+      final responseData = json.decode(response.body);
+
+      if (responseData['error'] != null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(responseData['error'])));
+      } else {
+        // Aquí manejas la respuesta exitosa. Por ejemplo, puedes guardar el token y redirigir al usuario.
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PdatosScreen(), // Tu pantalla de destino
+        ));
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al conectar con el servidor')));
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: ''),
+      appBar: AppBar(
+        title: Text('Iniciar Sesión'),
+        backgroundColor: Color(0xFF2DBDFE),
+      ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 20.0),
-              Text(
-                'Ingresa tus datos',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Nombre de Usuario',
-                ),
-              ),
-              TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Contraseña',
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Checkbox(
-                    value: _isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        _isChecked = value ?? false;
-                      });
-                    },
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    'Ingresa tus datos',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  Text('Guardar datos'),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nombre de Usuario',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Contraseña',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                        value: _isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            _isChecked = value ?? false;
+                          });
+                        },
+                      ),
+                      Text('Guardar datos'),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
+                      primary: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/HuellaAzul.png',
+                          width: 24,
+                          height: 24,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Iniciar Sesión',
+                          style: TextStyle(
+                            color: Color(0xFF2DBDFE),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
+                      primary: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/HuellaAzul.png',
+                          width: 24,
+                          height: 24,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Regresar',
+                          style: TextStyle(
+                            color: Color(0xFF2DBDFE),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PdatosScreen(),
-                  ));
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                  primary: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/HuellaAzul.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                    SizedBox(width: 10),
-                    Center(
-                      child: Text(
-                        'Iniciar Sesión',
-                        style: TextStyle(
-                          color: Color(0xFF2DBDFE),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                  primary: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/HuellaAzul.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                    SizedBox(width: 10),
-                    Center(
-                      child: Text(
-                        'Regresar',
-                        style: TextStyle(
-                          color: Color(0xFF2DBDFE),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
-}
-
-class MyAppBar extends AppBar {
-  MyAppBar({Key? key, String? title, bool automaticallyImplyLeading = false})
-      : super(
-          key: key,
-          title: Text(
-            title ?? '',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          automaticallyImplyLeading: automaticallyImplyLeading,
-        );
 }
