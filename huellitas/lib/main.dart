@@ -71,69 +71,19 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  // Navegar a la página de iniciar sesión (ISeccion)
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ISeccionScreen(),
-                  ));
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                  primary: Colors.white, // Cambia el color del botón
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/HuellaAzul.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Iniciar Sesión',
-                      style: TextStyle(
-                        color: Color(0xFF2DBDFE), // Color original del texto
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  // Navegar a la página de registro
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => RegistroScreen(),
-                  ));
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                  primary: Colors.white, // Cambia el color del botón
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/HuellaAzul.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Registrarse',
-                      style: TextStyle(
-                        color: Color(0xFF2DBDFE), // Color original del texto
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
+              _buildSmallButton('Iniciar Sesión', () {
+                // Navegar a la página de iniciar sesión (ISeccion)
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ISeccionScreen(),
+                ));
+              }),
+              SizedBox(height: 10.0),
+              _buildSmallButton('Registrarse', () {
+                // Navegar a la página de registro
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => RegistroScreen(),
+                ));
+              }),
               SizedBox(height: 20.0),
               Image.asset(
                 'assets/images/ellipse-159.png',
@@ -142,6 +92,22 @@ class LoginScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmallButton(String text, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+        primary: Colors.white, // Cambia el color del botón
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Color(0xFF2DBDFE), // Color original del texto
         ),
       ),
     );

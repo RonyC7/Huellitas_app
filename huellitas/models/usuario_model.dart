@@ -12,6 +12,6 @@ class Usuario {
     this.email = 'ronycarpio@gmail.com',
     this.telefono = '42775879',
     this.direccion = 'Zona 7',
-    this.imagen = '', // Agrega aquí la imagen del usuario
+    this.imagen = '',
   });
 }

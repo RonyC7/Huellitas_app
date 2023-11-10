@@ -28,7 +28,25 @@ class _PdatosScreenState extends State<PdatosScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF2DBDFE),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/HuellaBlanca.png',
+              width: 40.0,
+              height: 40.0,
+            ),
+            Text(
+              'Pagina principal',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.person),
@@ -38,15 +56,6 @@ class _PdatosScreenState extends State<PdatosScreen> {
             },
           ),
         ],
-        title: Center(
-          child: Text(
-            'Pagina principal',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
       ),
       body: Center(
         child: Column(
@@ -58,7 +67,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                     MaterialPageRoute(builder: (context) => AnuncioScreen()));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                primary: Color(0xFF2DBDFE),
               ),
               child: Text(
                 'Publicar Anuncio',
@@ -73,6 +82,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
+                color: Color(0xFF2DBDFE),
               ),
               textAlign: TextAlign.center,
             ),
@@ -85,7 +95,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                       padding: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.blue,
+                          color: Color(0xFF2DBDFE),
                         ),
                       ),
                       child: Column(
@@ -106,7 +116,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                               // Acción al presionar "Seguir"
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
+                              primary: Color(0xFF2DBDFE),
                             ),
                             child: Text(
                               'Seguir',
@@ -121,7 +131,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                               // Acción al presionar "Ver Más"
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
+                              primary: Color(0xFF2DBDFE),
                             ),
                             child: Text(
                               'Ver Más',
@@ -155,7 +165,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                     MaterialPageRoute(builder: (context) => Bcuidador()));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                primary: Color(0xFF2DBDFE),
               ),
               child: Text(
                 'Buscar cuidador',
@@ -171,7 +181,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                     MaterialPageRoute(builder: (context) => AnunciosP()));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                primary: Color(0xFF2DBDFE),
               ),
               child: Text(
                 'Anuncios publicados',
@@ -187,7 +197,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                     MaterialPageRoute(builder: (context) => MascotasScreen()));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                primary: Color(0xFF2DBDFE),
               ),
               child: Text(
                 'Mis Mascotas',
@@ -200,6 +210,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF2DBDFE),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

@@ -3,8 +3,13 @@ import 'chats.dart';
 import 'Pdatos.dart';
 import 'Settings.dart';
 
-class Bcuidador extends StatelessWidget {
-  final List<Cuidador> cuidadores = [
+class Bcuidador extends StatefulWidget {
+  @override
+  _BcuidadorState createState() => _BcuidadorState();
+}
+
+class _BcuidadorState extends State<Bcuidador> {
+  List<Cuidador> cuidadores = [
     Cuidador(
       nombre: 'Juan',
       valoracion: 4.5,
@@ -22,13 +27,39 @@ class Bcuidador extends StatelessWidget {
     ),
   ];
 
+  bool _searching = false;
+  TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Buscar Cuidador'),
-        ),
+        title: _searching
+            ? TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Buscar...',
+                  icon: Icon(Icons.search),
+                ),
+                onChanged: (query) {
+                  setState(() {
+                    cuidadores = _filterCuidadores(query);
+                  });
+                },
+              )
+            : Center(child: Text('Buscar Cuidador')),
+        actions: [
+          IconButton(
+            icon: Icon(_searching ? Icons.cancel : Icons.search),
+            onPressed: () {
+              setState(() {
+                _searching = !_searching;
+                _searchController.clear();
+                cuidadores = _filterCuidadores('');
+              });
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: cuidadores.length,
@@ -68,6 +99,33 @@ class Bcuidador extends StatelessWidget {
       ),
     );
   }
+
+  List<Cuidador> _filterCuidadores(String query) {
+    if (query.isEmpty) {
+      return [
+        Cuidador(
+          nombre: 'Juan',
+          valoracion: 4.5,
+          imagen: 'assets/images/Prueba2.png',
+        ),
+        Cuidador(
+          nombre: 'Luis',
+          valoracion: 4.2,
+          imagen: 'assets/images/Prueba3.png',
+        ),
+        Cuidador(
+          nombre: 'Martha',
+          valoracion: 4.8,
+          imagen: 'assets/images/Prueba4.png',
+        ),
+      ];
+    } else {
+      return cuidadores
+          .where((cuidador) =>
+              cuidador.nombre.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+  }
 }
 
 class Cuidador {
@@ -92,8 +150,7 @@ class CuidadorCard extends StatelessWidget {
           Image.asset(
             cuidador.imagen,
             width: 150.0,
-            height:
-                180.0, // Ajusta la altura para hacer las imágenes un poco más largas
+            height: 180.0,
             fit: BoxFit.cover,
           ),
           Text(

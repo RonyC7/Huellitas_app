@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'Pdatos.dart';
 
 class ISeccionScreen extends StatefulWidget {
@@ -10,155 +7,150 @@ class ISeccionScreen extends StatefulWidget {
 }
 
 class _ISeccionScreenState extends State<ISeccionScreen> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   bool _isChecked = false;
-
-  Future<void> _login() async {
-    final url = Uri.parse('http://localhost:8000/api/login/');
-
-    try {
-      final response = await http.post(url, body: {
-        'username': _usernameController.text,
-        'password': _passwordController.text,
-      });
-
-      final responseData = json.decode(response.body);
-
-      if (responseData['error'] != null) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(responseData['error'])));
-      } else {
-        // Aquí manejas la respuesta exitosa. Por ejemplo, puedes guardar el token y redirigir al usuario.
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PdatosScreen(), // Tu pantalla de destino
-        ));
-      }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al conectar con el servidor')));
-      print(error);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Iniciar Sesión'),
-        backgroundColor: Color(0xFF2DBDFE),
-      ),
+      appBar: MyAppBar(title: ''),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    'Ingresa tus datos',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      labelText: 'Nombre de Usuario',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Contraseña',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                        value: _isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            _isChecked = value ?? false;
-                          });
-                        },
-                      ),
-                      Text('Guardar datos'),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: _login,
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
-                      primary: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/HuellaAzul.png',
-                          width: 24,
-                          height: 24,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Iniciar Sesión',
-                          style: TextStyle(
-                            color: Color(0xFF2DBDFE),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20.0),
+              Text(
+                'Ingresa tus datos',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20.0),
+              _buildInputField('Nombre de Usuario', 'Nombre de Usuario'),
+              _buildInputField('Contraseña', 'Contraseña', isPassword: true),
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: _isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        _isChecked = value ?? false;
+                      });
                     },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
-                      primary: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/HuellaAzul.png',
-                          width: 24,
-                          height: 24,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Regresar',
-                          style: TextStyle(
-                            color: Color(0xFF2DBDFE),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
                   ),
+                  Text('Guardar datos'),
                 ],
               ),
-            ),
+              SizedBox(height: 20.0),
+              _buildSmallButton('Iniciar Sesión', () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PdatosScreen(),
+                ));
+              }),
+              SizedBox(height: 10.0),
+              _buildSmallButton('Regresar', () {
+                Navigator.of(context).pop();
+              }),
+              SizedBox(height: 20.0),
+              // Mostrar 25 imágenes de perros y otros animales
+              Wrap(
+                children: List.generate(24, (index) {
+                  return Image.asset(
+                    _getRandomAnimalImage(index),
+                    width: 40,
+                    height: 40,
+                  );
+                }),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+
+  Widget _buildInputField(String label, String hint,
+      {bool isPassword = false}) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          width: 300.0,
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: hint,
+            ),
+            obscureText: isPassword,
+          ),
+        ),
+        SizedBox(height: 10.0),
+      ],
+    );
+  }
+
+  Widget _buildSmallButton(String text, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+        primary: Colors.white, // Cambia el color del botón
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Color(0xFF2DBDFE), // Color original del texto
+        ),
+      ),
+    );
+  }
+
+  String _getRandomAnimalImage(int index) {
+    // Lista de nombres de imágenes de perros y otros animales
+    final animalImages = [
+      'PerroGold',
+      'PerroNegro',
+      'PerroNegro2',
+      'PerroPequeno',
+      'PerroBlanco',
+      'icono1',
+      'icono2',
+      'icono3',
+      'icono4',
+      'Tortuga',
+      'Gatito',
+      'Hamster',
+      'Cacatua',
+      'Pez',
+    ];
+    // Obtén una imagen de perro o animal aleatoria
+    final randomAnimal = animalImages[index % animalImages.length];
+    return 'assets/images/$randomAnimal.png';
+  }
+}
+
+class MyAppBar extends AppBar {
+  MyAppBar({Key? key, String? title, bool automaticallyImplyLeading = false})
+      : super(
+          key: key,
+          title: Text(
+            title ?? '',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          automaticallyImplyLeading: automaticallyImplyLeading,
+        );
 }

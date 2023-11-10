@@ -9,139 +9,108 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Configuración'),
+        backgroundColor: Color(0xFF2DBDFE),
+        title: Text(
+          'Configuración',
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
-      body: Align(
-        alignment: Alignment.centerLeft,
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => UsuarioScreen(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                primary: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/HuellaAzul.png',
-                    width: 24.0,
-                    height: 24.0,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Editar Perfil',
-                    style: TextStyle(
-                      color: Color(0xFF2DBDFE),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildSmallButton('Editar Perfil', Icons.account_circle, () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UsuarioScreen(),
+                ),
+              );
+            }),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => PoliticasScreen(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                primary: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/HuellaAzul.png',
-                    width: 24.0,
-                    height: 24.0,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Politicas',
-                    style: TextStyle(
-                      color: Color(0xFF2DBDFE),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildSmallButton('Politicas', Icons.assignment, () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => PoliticasScreen(),
+                ),
+              );
+            }),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => MascotasScreen(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                primary: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/HuellaAzul.png',
-                    width: 24.0,
-                    height: 24.0,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Mascotas',
-                    style: TextStyle(
-                      color: Color(0xFF2DBDFE),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildSmallButton('Mascotas', Icons.pets, () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => MascotasScreen(),
+                ),
+              );
+            }),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => MyApp(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                primary: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.logout,
-                    color: Color(0xFF2DBDFE),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Cerrar Sesión',
-                    style: TextStyle(
-                      color: Color(0xFF2DBDFE),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
+            _buildIconButton('Cerrar Sesión', Icons.exit_to_app, () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => MyApp(),
+                ),
+              );
+            }),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmallButton(
+      String text, IconData iconData, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 15.0,
+        ),
+        primary: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            iconData,
+            color: Color(0xFF2DBDFE),
+            size: 20.0,
+          ),
+          SizedBox(width: 10),
+          Text(
+            text,
+            style: TextStyle(
+              color: Color(0xFF2DBDFE),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIconButton(
+      String text, IconData iconData, VoidCallback onPressed) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 15.0,
+        ),
+        primary: Colors.white,
+      ),
+      icon: Icon(
+        iconData,
+        color: Color(0xFF2DBDFE),
+        size: 20.0,
+      ),
+      label: Text(
+        text,
+        style: TextStyle(
+          color: Color(0xFF2DBDFE),
         ),
       ),
     );
