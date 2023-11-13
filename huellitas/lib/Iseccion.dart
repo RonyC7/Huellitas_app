@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'Pdatos.dart';
+import 'Employee.dart';
 
 class ISeccionScreen extends StatefulWidget {
   @override
@@ -29,10 +30,20 @@ class _ISeccionScreenState extends State<ISeccionScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(responseData['error'])));
       } else {
-        // Aquí manejas la respuesta exitosa. Por ejemplo, puedes guardar el token y redirigir al usuario.
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PdatosScreen(), // Tu pantalla de destino
-        ));
+        final user = responseData['user'];
+
+        if (user['is_customer']) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => PdatosScreen(),
+          ));
+        } else if (user['is_employee']) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => EmployeeScreen(userData: user),
+          ));
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Acceso no autorizado.')));
+        }
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(

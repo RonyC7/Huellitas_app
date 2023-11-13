@@ -42,80 +42,59 @@ class MyAppBar extends AppBar {
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: MyAppBar(title: 'Bienvenidos'),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double screenWidth = constraints.maxWidth;
-          double screenHeight = constraints.maxHeight;
-
-          return SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: screenHeight * 0.03), // Ajusta el margen superior
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        FractionallySizedBox(
-                          widthFactor: screenWidth < 600
-                              ? 0.9
-                              : 0.8, // Ajusta el ancho según el tamaño de la pantalla
-                          child: Image.asset(
-                            'assets/images/ellipse-158.png',
-                          ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          child: FractionallySizedBox(
-                            widthFactor: screenWidth < 600
-                                ? 0.5
-                                : 0.4, // Ajusta el ancho según el tamaño de la pantalla
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                            ),
-                          ),
-                        ),
-                      ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: screenWidth < 600
+                          ? screenWidth * 0.9
+                          : screenWidth * 0.8,
+                      child: Image.asset('assets/images/ellipse-158.png'),
                     ),
-                  ),
-                  SizedBox(
-                      height:
-                          screenHeight * 0.03), // Ajusta el espacio vertical
-                  _buildSmallButton('Iniciar Sesión', () {
-                    // Navegar a la página de iniciar sesión (ISeccion)
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ISeccionScreen(),
-                    ));
-                  }),
-                  SizedBox(
-                      height:
-                          screenHeight * 0.01), // Ajusta el espacio vertical
-                  _buildSmallButton('Registrarse', () {
-                    // Navegar a la página de registro
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RegistroScreen(),
-                    ));
-                  }),
-                  SizedBox(
-                      height:
-                          screenHeight * 0.03), // Ajusta el espacio vertical
-                  FractionallySizedBox(
-                    widthFactor: screenWidth < 600
-                        ? 0.7
-                        : 0.6, // Ajusta el ancho según el tamaño de la pantalla
-                    child: Image.asset(
-                      'assets/images/ellipse-159.png',
+                    Positioned(
+                      top: 0,
+                      child: SizedBox(
+                        width: screenWidth < 600
+                            ? screenWidth * 0.5
+                            : screenWidth * 0.4,
+                        child: Image.asset('assets/images/logo.png'),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+              SizedBox(height: 20),
+              _buildSmallButton('Iniciar Sesión', () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ISeccionScreen(),
+                ));
+              }),
+              SizedBox(height: 10),
+              _buildSmallButton('Registrarse', () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => RegistroScreen(),
+                ));
+              }),
+              SizedBox(height: 20),
+              SizedBox(
+                width:
+                    screenWidth < 600 ? screenWidth * 0.7 : screenWidth * 0.6,
+                child: Image.asset('assets/images/ellipse-159.png'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -124,17 +103,12 @@ class LoginScreen extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: 30.0, // Ajusta el padding vertical
-          horizontal: 30.0, // Ajusta el padding horizontal
-        ),
-        primary: Colors.white, // Cambia el color del botón
+        primary: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
       ),
       child: Text(
         text,
-        style: TextStyle(
-          color: Color(0xFF2DBDFE), // Color original del texto
-        ),
+        style: TextStyle(color: Color(0xFF2DBDFE)),
       ),
     );
   }
