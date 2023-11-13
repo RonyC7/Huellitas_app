@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huellitas/Bcuidador.dart';
 import 'chats.dart';
 import 'Settings.dart';
 import 'Pdatos.dart';
@@ -134,7 +135,7 @@ class UsuarioScreen extends StatelessWidget {
                 // Navegar a la pantalla de inicio (PdatosScreen)
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PdatosScreen()),
+                  MaterialPageRoute(builder: (context) => Bcuidador()),
                 );
               },
             ),

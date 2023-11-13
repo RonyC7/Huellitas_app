@@ -84,7 +84,7 @@ class _BcuidadorState extends State<Bcuidador> {
               icon: Icon(Icons.home),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PdatosScreen()));
+                    MaterialPageRoute(builder: (context) => Bcuidador()));
               },
             ),
             IconButton(
