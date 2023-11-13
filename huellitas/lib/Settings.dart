@@ -19,11 +19,12 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildSmallButton('Editar Perfil', Icons.account_circle, () {
+            _buildButton('Editar Perfil', Icons.account_circle, () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => UsuarioScreen(),
@@ -31,7 +32,7 @@ class SettingsScreen extends StatelessWidget {
               );
             }),
             SizedBox(height: 20),
-            _buildSmallButton('Politicas', Icons.assignment, () {
+            _buildButton('Politicas', Icons.assignment, () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PoliticasScreen(),
@@ -39,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
               );
             }),
             SizedBox(height: 20),
-            _buildSmallButton('Mascotas', Icons.pets, () {
+            _buildButton('Mascotas', Icons.pets, () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => MascotasScreen(),
@@ -47,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
               );
             }),
             SizedBox(height: 20),
-            _buildIconButton('Cerrar Sesión', Icons.exit_to_app, () {
+            _buildButton('Cerrar Sesión', Icons.exit_to_app, () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => MyApp(),
@@ -60,57 +61,28 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSmallButton(
-      String text, IconData iconData, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 15.0,
-        ),
-        primary: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            iconData,
-            color: Color(0xFF2DBDFE),
-            size: 20.0,
+  Widget _buildButton(String text, IconData iconData, VoidCallback onPressed) {
+    return SizedBox(
+      width: double.infinity, // Ocupar todo el ancho disponible
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            vertical: 15.0,
+            horizontal: 15.0,
           ),
-          SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(
-              color: Color(0xFF2DBDFE),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIconButton(
-      String text, IconData iconData, VoidCallback onPressed) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 15.0,
+          primary: Colors.white,
         ),
-        primary: Colors.white,
-      ),
-      icon: Icon(
-        iconData,
-        color: Color(0xFF2DBDFE),
-        size: 20.0,
-      ),
-      label: Text(
-        text,
-        style: TextStyle(
+        icon: Icon(
+          iconData,
           color: Color(0xFF2DBDFE),
+          size: 20.0,
+        ),
+        label: Text(
+          text,
+          style: TextStyle(
+            color: Color(0xFF2DBDFE),
+          ),
         ),
       ),
     );

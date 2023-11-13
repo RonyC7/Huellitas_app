@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:huellitas/main.dart'; // Asegúrate de importar correctamente el archivo main.dart
+import 'package:huellitas/main.dart';
 
 class EmployeeScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -17,7 +17,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      // Aquí puedes añadir la lógica para manejar la navegación
+      // Puedes añadir la lógica para manejar la navegación aquí
     });
   }
 
@@ -33,8 +33,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                MyApp()), // Reemplaza con el nombre correcto de tu aplicación
+          builder: (context) =>
+              MyApp(), // Reemplaza con el nombre correcto de tu aplicación
+        ),
       );
     } else {
       // Maneja el error, por ejemplo, mostrando un mensaje al usuario
@@ -63,12 +64,21 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[100],
+        automaticallyImplyLeading: false, // Quita la flecha de retroceso
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              // Coloca aquí la lógica para navegar a la pantalla de perfil
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Bienvenido, $username',
+            'Hola, $username',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
@@ -76,8 +86,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
+            icon: Icon(Icons.home),
+            label: 'Inicio',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
@@ -85,7 +95,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Solicitudes',
+            label: 'Aceptados',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.logout),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'Pdatos.dart';
 import 'Employee.dart';
 
@@ -31,10 +30,14 @@ class _ISeccionScreenState extends State<ISeccionScreen> {
             .showSnackBar(SnackBar(content: Text(responseData['error'])));
       } else {
         final user = responseData['user'];
+        final token = responseData['token']; // Asume que el token está presente
+
+        // Añade el token al userData para pasarlo a las pantallas
+        user['token'] = token;
 
         if (user['is_customer']) {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => PdatosScreen(),
+            builder: (context) => PdatosScreen(userData: user),
           ));
         } else if (user['is_employee']) {
           Navigator.of(context).push(MaterialPageRoute(
@@ -56,7 +59,7 @@ class _ISeccionScreenState extends State<ISeccionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Iniciar Sesión'),
+        title: Text('Iniciar sesión'),
         backgroundColor: Color(0xFF2DBDFE),
       ),
       body: SingleChildScrollView(
@@ -94,21 +97,6 @@ class _ISeccionScreenState extends State<ISeccionScreen> {
                     ),
                   ),
                   SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                        value: _isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            _isChecked = value ?? false;
-                          });
-                        },
-                      ),
-                      Text('Guardar datos'),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: _login,
                     style: ElevatedButton.styleFrom(
@@ -127,35 +115,6 @@ class _ISeccionScreenState extends State<ISeccionScreen> {
                         SizedBox(width: 10),
                         Text(
                           'Iniciar Sesión',
-                          style: TextStyle(
-                            color: Color(0xFF2DBDFE),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
-                      primary: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/HuellaAzul.png',
-                          width: 24,
-                          height: 24,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Regresar',
                           style: TextStyle(
                             color: Color(0xFF2DBDFE),
                           ),

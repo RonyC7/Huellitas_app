@@ -67,7 +67,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Text(
-                      'Crear Cuenta',
+                      'Crear cuenta',
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
