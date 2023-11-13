@@ -1,6 +1,6 @@
 # huellitas
 
-A new Flutter project.
+Proyecto movil que brindara servicios de cuidados para cualquier mascota.
 
 ## Getting Started
 
