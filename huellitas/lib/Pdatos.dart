@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:huellitas/Solicitudes_cliente.dart';
 import 'package:huellitas/usuario.dart';
 import 'chats.dart';
 import 'Settings.dart';
@@ -205,8 +206,11 @@ class _PdatosScreenState extends State<PdatosScreen> {
             IconButton(
               icon: Icon(Icons.assignment_outlined),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatsScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SolicitudesClienteScreen(
+                            userData: widget.userData)));
               },
             ),
             IconButton(
