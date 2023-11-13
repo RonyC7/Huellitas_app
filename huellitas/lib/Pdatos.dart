@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:huellitas/usuario.dart';
 import 'chats.dart';
 import 'Settings.dart';
 
@@ -51,6 +52,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                 child: ListTile(
                   title: Text("${cuidador['nombre']}  ${cuidador['apellido']}"),
                   subtitle: Text('Distancia: ${cuidador['distance']} km'),
+                  tileColor: Color(0xFF2DBDFE),
                   trailing: ElevatedButton(
                     onPressed: () {
                       // Aquí la lógica para contactar al cuidador
@@ -77,6 +79,20 @@ class _PdatosScreenState extends State<PdatosScreen> {
         title: const Text('Huellitas',
             style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
         automaticallyImplyLeading: false, // Quita la flecha de retroceso
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              // Acción cuando se presiona el botón de perfil
+              // Por ejemplo, navegar a la pantalla de perfil del usuario
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          UsuarioScreen() /* Tu pantalla de perfil */));
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -108,7 +124,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 0, 138, 252),
+                          color: Color(0xFF2DBDFE),
                           backgroundColor: Color.fromARGB(255, 255, 255, 255)),
                     ),
                   ),
@@ -116,8 +132,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                 Container(
                   margin: EdgeInsets.all(30),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 245, 246,
-                        247), // Color de fondo como en tu clase "aqua"
+                    color: Color(0xFF2DBDFE),
                     borderRadius:
                         BorderRadius.circular(10), // Bordes redondeados
                   ),
@@ -132,7 +147,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 93, 168, 229)),
+                                color: Color.fromARGB(255, 252, 252, 252)),
                           ),
                         ),
                       ),
@@ -150,7 +165,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                           child: Text('Publicar anuncio',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.lightBlue[100], // Color del botón
+                            primary: Colors.lightBlue[50], // Color del botón
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                   10), // Bordes redondeados
@@ -171,7 +186,7 @@ class _PdatosScreenState extends State<PdatosScreen> {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 93, 168, 229),
+                      color: Color(0xFF2DBDFE),
                       backgroundColor: Colors.white),
                 ),
                 cuidadoresCercanos != null && cuidadoresCercanos!.isNotEmpty
