@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:huellitas/Editar_solicitud_cliente.dart';
+
 class SolicitudesClienteScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
 
@@ -20,6 +22,18 @@ class _SolicitudesClienteScreenState extends State<SolicitudesClienteScreen> {
   void initState() {
     super.initState();
     _fetchSolicitudes();
+  }
+
+  void _navegarAEditarSolicitud(BuildContext context, int solicitudId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditarSolicitudScreen(
+          username: widget.userData['username'],
+          solicitudId: solicitudId,
+        ),
+      ),
+    );
   }
 
   Future<void> _fetchSolicitudes() async {
@@ -49,7 +63,9 @@ class _SolicitudesClienteScreenState extends State<SolicitudesClienteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listado de Solicitudes de Cuidado'),
+        title: Text('Listado de solicitudes'),
+        backgroundColor:
+            Colors.lightBlueAccent, // Cambia esto al color que prefieras
       ),
       body: solicitudes == null || solicitudes!.isEmpty
           ? Center(child: Text('No tienes solicitudes de cuidado.'))
@@ -57,45 +73,64 @@ class _SolicitudesClienteScreenState extends State<SolicitudesClienteScreen> {
               itemCount: solicitudes!.length,
               itemBuilder: (context, index) {
                 var solicitud = solicitudes![index];
-                return Card(
-                  child: ExpansionTile(
-                    title: Text(
-                        'Solicitud #${solicitud['id']} - ${solicitud['tipo_de_cuidado']} - Estado: ${solicitud['estado']}'),
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                            'Inicio: ${solicitud['fecha_inicio']} a las ${solicitud['hora_inicio']}'),
-                        subtitle: Text(
-                            'Fin: ${solicitud['fecha_fin']} a las ${solicitud['hora_fin']}'),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 5.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    color:
+                        Colors.blue.shade100, // Color del fondo de la tarjeta
+                    child: ExpansionTile(
+                      title: Text(
+                        'Solicitud #${solicitud['id']}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      ListTile(
-                        title: Text('Descripción: ${solicitud['descripcion']}'),
-                        subtitle: Text('Precio: Q${solicitud['precio']}'),
-                      ),
-                      // Agregar más detalles aquí si es necesario
-                      ButtonBar(
-                        children: <Widget>[
-                          TextButton(
-                            child: Text('Ver detalles'),
-                            onPressed: () {
-                              // Navegar a la pantalla de detalles
-                            },
+                      subtitle: Text('Estado: ${solicitud['estado']}'),
+                      leading: Icon(Icons.pets), // Icono de la mascota
+                      children: <Widget>[
+                        // Aquí puedes agregar los detalles que desees mostrar
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Inicio: ${solicitud['fecha_inicio']}'),
+                              Text('Fin: ${solicitud['fecha_fin']}'),
+                              Text('Descripción: ${solicitud['descripcion']}'),
+                              Text('Precio: ${solicitud['precio']}'),
+                              // Botones para acciones
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    child: Text('Ver detalles'),
+                                    onPressed: () {
+                                      // Navegar a la pantalla de detalles
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Editar'),
+                                    onPressed: () {
+                                      // Navegar a la pantalla de edición
+                                      _navegarAEditarSolicitud(
+                                          context, solicitud['id']);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Eliminar'),
+                                    onPressed: () {
+                                      // Mostrar un diálogo de confirmación para eliminar
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          TextButton(
-                            child: Text('Editar'),
-                            onPressed: () {
-                              // Navegar a la pantalla de edición
-                            },
-                          ),
-                          TextButton(
-                            child: Text('Eliminar'),
-                            onPressed: () {
-                              // Mostrar un diálogo de confirmación para eliminar
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
