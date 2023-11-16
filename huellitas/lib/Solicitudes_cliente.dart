@@ -24,18 +24,6 @@ class _SolicitudesClienteScreenState extends State<SolicitudesClienteScreen> {
     _fetchSolicitudes();
   }
 
-  void _navegarAEditarSolicitud(BuildContext context, int solicitudId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditarSolicitudScreen(
-          username: widget.userData['username'],
-          solicitudId: solicitudId,
-        ),
-      ),
-    );
-  }
-
   Future<void> _fetchSolicitudes() async {
     String username = widget.userData['username'];
     // URL de tu API para obtener las solicitudes
@@ -114,8 +102,6 @@ class _SolicitudesClienteScreenState extends State<SolicitudesClienteScreen> {
                                     child: Text('Editar'),
                                     onPressed: () {
                                       // Navegar a la pantalla de edición
-                                      _navegarAEditarSolicitud(
-                                          context, solicitud['id']);
                                     },
                                   ),
                                   TextButton(

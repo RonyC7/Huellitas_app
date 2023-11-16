@@ -54,10 +54,7 @@ class AnunciosP extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.home),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PdatosScreen()));
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(Icons.settings),
