@@ -55,11 +55,6 @@ class AnuncioScreen extends StatelessWidget {
                 );
 
                 // Regresar a la pantalla Pdatos
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => PdatosScreen(),
-                  ),
-                );
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
@@ -76,11 +71,6 @@ class AnuncioScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Acción al presionar "Regresar"
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => PdatosScreen(),
-                  ),
-                );
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
