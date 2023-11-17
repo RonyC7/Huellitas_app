@@ -89,8 +89,9 @@ class _PdatosScreenState extends State<PdatosScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          UsuarioScreen() /* Tu pantalla de perfil */));
+                      builder: (context) => UsuarioScreen(
+                          username: widget.userData[
+                              'username']) /* Tu pantalla de perfil */));
             },
           ),
         ],
@@ -204,13 +205,30 @@ class _PdatosScreenState extends State<PdatosScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: Icon(Icons.assignment_outlined),
+              icon: Icon(Icons.person),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SolicitudesClienteScreen(
-                            userData: widget.userData)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        UsuarioScreen(username: widget.userData['username']),
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                // Extrae el username del mapa userData
+                String username = widget.userData['username'];
+
+                // Pasa el username a UsuarioScreen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UsuarioScreen(username: username),
+                  ),
+                );
               },
             ),
             IconButton(

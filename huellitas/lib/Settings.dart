@@ -24,13 +24,7 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildButton('Editar Perfil', Icons.account_circle, () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => UsuarioScreen(),
-                ),
-              );
-            }),
+            _buildButton('Editar Perfil', Icons.account_circle, () {}),
             SizedBox(height: 20),
             _buildButton('Politicas', Icons.assignment, () {
               Navigator.of(context).push(
