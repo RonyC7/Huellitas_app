@@ -217,21 +217,6 @@ class _PdatosScreenState extends State<PdatosScreen> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () {
-                // Extrae el username del mapa userData
-                String username = widget.userData['username'];
-
-                // Pasa el username a UsuarioScreen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UsuarioScreen(username: username),
-                  ),
-                );
-              },
-            ),
-            IconButton(
               icon: Icon(Icons.home),
               onPressed: () {}, // Navegación a la página de inicio
             ),

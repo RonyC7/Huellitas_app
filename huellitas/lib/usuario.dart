@@ -105,7 +105,8 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditarUsuarioScreen()),
+                            builder: (context) =>
+                                EditarUsuarioScreen(username: widget.username)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
